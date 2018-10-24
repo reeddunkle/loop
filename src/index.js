@@ -2,10 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ConnectedRouter } from 'react-router-redux';
 import { Provider } from 'react-redux';
+import * as serviceWorker from './serviceWorker';
 import store, { history } from './store';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+
+console.log({ ConnectedRouter });
 
 ReactDOM.render(
   <Provider store={store}>
