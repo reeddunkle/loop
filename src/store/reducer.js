@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import dataReducer from './dataStore';
+import sessionReducer from './session';
+import loopsReducer from './loops';
 import { CLEAR_STORE } from './actions';
 
 const appReducers = combineReducers({
-  data: dataReducer,
+  loops: loopsReducer,
+  session: sessionReducer,
   router: routerReducer
 });
 

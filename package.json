@@ -11,6 +11,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "2.0.5",
     "redux": "^4.0.1",
+    "redux-actions": "^2.6.3",
     "redux-devtools": "^3.4.1",
     "redux-storage-decorator-filter": "^1.1.8",
     "redux-storage-engine-localstorage": "^1.1.4",
