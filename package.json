@@ -3,10 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "history": "^4.7.2",
     "lodash": "^4.17.11",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
+    "react-redux": "^5.0.7",
+    "react-router-redux": "^4.0.8",
     "react-scripts": "2.0.5",
+    "redux": "^4.0.1",
+    "redux-devtools": "^3.4.1",
+    "redux-storage-decorator-filter": "^1.1.8",
+    "redux-storage-engine-localstorage": "^1.1.4",
+    "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.83.0",
     "styled-components": "^4.0.2"
   },
