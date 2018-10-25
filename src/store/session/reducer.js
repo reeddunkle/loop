@@ -4,7 +4,7 @@ import { setLoopId, setSession } from './actions';
 const defaultState = {
   email: '',
   name: '',
-  loopId: 'test'
+  loopId: 'test-id'
 };
 
 export default handleActions(

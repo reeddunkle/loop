@@ -1,12 +1,13 @@
 import { handleActions } from 'redux-actions';
 import get from 'lodash/get';
-import { addItem } from './actions';
+import omit from 'lodash/omit';
+import { createItem, deleteItem } from './actions';
 
 const defaultState = {
-  test: {
+  'test-id': {
     collection: [
-      { label: 'Apple', indexHistory: [], id: 'apple' },
       { label: 'Pear', indexHistory: [], id: 'pear' },
+      { label: 'Apple', indexHistory: [], id: 'apple' },
       { label: 'Banana', indexHistory: [], id: 'banana' },
       { label: 'Cumquat', indexHistory: [], id: 'cumquat' },
       { label: 'Blackberry', indexHistory: [], id: 'blackberry' }
@@ -16,17 +17,19 @@ const defaultState = {
 
 export default handleActions(
   {
-    [addItem]: (state, action) => {
-      const { id, item } = action.payload;
-      const loop = get(state, 'id', {});
+    [createItem]: (state, action) => {
+      const item = action.payload;
+      const loop = get(state, item.id, {});
+      const currentCollection = get(loop, 'collection', []);
       return {
         ...state,
-        [id]: {
+        [item.id]: {
           ...loop,
-          collection: [...get(loop, 'collection', []), item]
+          collection: [...currentCollection, item]
         }
       };
-    }
+    },
+    [deleteItem]: (state, action) => omit(state, action.payload)
   },
   defaultState
 );

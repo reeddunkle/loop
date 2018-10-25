@@ -4,7 +4,6 @@ import kebabCase from 'lodash/kebabCase';
 import get from 'lodash/get';
 import { move } from '../../util';
 import { Footer, ItemInput, Results } from './components';
-import './App.css';
 
 const getNewItem = (label, id, indexHistory = []) => {
   return {
@@ -73,14 +72,10 @@ function orderDown(index, collection = []) {
 }
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataInput: '',
-      collection: props.collection,
-      recentlyTouchedIndex: null
-    };
-  }
+  state = {
+    dataInput: '',
+    recentlyTouchedIndex: null
+  };
 
   handleInputRef = c => {
     this.inputRef = c;
@@ -93,7 +88,8 @@ class App extends React.Component {
   };
 
   handleAdd = () => {
-    const { collection, dataInput } = this.state;
+    const { dataInput } = this.state;
+    const { collection } = this.props;
     const newItem = getNewItem(dataInput);
     this.setState(
       {
@@ -101,7 +97,11 @@ class App extends React.Component {
         dataInput: '',
         recentlyTouchedIndex: collection.length
       },
-      this.handleRecentlyTouchedIndex
+      () => {
+        this.handleRecentlyTouchedIndex();
+        console.log({ newItem });
+        this.props.onAddItem(newItem);
+      }
     );
   };
 
@@ -194,9 +194,11 @@ class App extends React.Component {
   };
 
   render() {
-    const { collection, dataInput, recentlyTouchedIndex } = this.state;
+    const { dataInput, recentlyTouchedIndex } = this.state;
+    const { collection } = this.props;
+
     return (
-      <div className="App">
+      <div>
         <ItemInput
           handleAdd={this.handleAdd}
           handleInputChange={this.handleInputChange}
