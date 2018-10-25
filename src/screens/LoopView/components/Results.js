@@ -87,7 +87,6 @@ const Results = ({
 }) => {
   return (
     <Segment>
-      <Header as="h2">Results</Header>
       <Table celled color="teal" selectable textAlign="center">
         <Table.Header>
           <Table.Row>

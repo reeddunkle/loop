@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react';
 import kebabCase from 'lodash/kebabCase';
 import get from 'lodash/get';
 import { move } from '../../util';
-import { ItemInput, LoopTitle, Results } from './components';
+import { Footer, ItemInput, Results } from './components';
 import './App.css';
 
 const getNewItem = (label, id, indexHistory = []) => {
@@ -197,7 +197,6 @@ class App extends React.Component {
     const { collection, dataInput, recentlyTouchedIndex } = this.state;
     return (
       <div className="App">
-        <LoopTitle title="Loop" />
         <ItemInput
           handleAdd={this.handleAdd}
           handleInputChange={this.handleInputChange}
@@ -216,9 +215,9 @@ class App extends React.Component {
               rankUp={this.rankUp}
               rankDown={this.rankDown}
             />
-            <div className="App-footer">
+            <Footer className="App-footer">
               <Button onClick={this.log} content="Log" />
-            </div>
+            </Footer>
           </React.Fragment>
         )}
       </div>
