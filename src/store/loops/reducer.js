@@ -18,12 +18,12 @@ const defaultState = {
 export default handleActions(
   {
     [createItem]: (state, action) => {
-      const item = action.payload;
-      const loop = get(state, item.id, {});
+      const { item, loopId } = action.payload;
+      const loop = get(state, loopId, {});
       const currentCollection = get(loop, 'collection', []);
       return {
         ...state,
-        [item.id]: {
+        [loopId]: {
           ...loop,
           collection: [...currentCollection, item]
         }

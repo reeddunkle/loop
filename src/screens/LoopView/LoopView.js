@@ -99,8 +99,7 @@ class App extends React.Component {
       },
       () => {
         this.handleRecentlyTouchedIndex();
-        console.log({ newItem });
-        this.props.onAddItem(newItem);
+        this.props.onAddItem(newItem, this.props.loopId);
       }
     );
   };

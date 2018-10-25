@@ -7,6 +7,6 @@ export const getLoopSelector = createSelector(
   [loopsSliceSlector, loopIdSelector],
   (loops, id) => get(loops, id)
 );
-export const getCollectionSelector = createSelector([getLoopSelector], loop =>
+export const collectionSelector = createSelector([getLoopSelector], loop =>
   get(loop, 'collection')
 );
