@@ -1,2 +1,2 @@
-import Container from './container';
-export default Container;
+import LoopViewContainer from './LoopViewContainer';
+export default LoopViewContainer;

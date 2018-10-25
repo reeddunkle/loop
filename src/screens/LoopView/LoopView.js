@@ -1,97 +1,18 @@
 import React from 'react';
-import { Button, Header, Input } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 import kebabCase from 'lodash/kebabCase';
 import get from 'lodash/get';
-import endsWith from 'lodash/endsWith';
-import slice from 'lodash/slice';
-import { Emoji, Results } from './components';
-import { move } from './util';
+import { move } from '../../util';
+import { ItemInput, LoopTitle, Results } from './components';
 import './App.css';
 
-const SPACE = ' ';
-
-const getNewItem = ({ id, indexHistory = [], label = '' }) => {
+const getNewItem = (label, id, indexHistory = []) => {
   return {
     label,
     id: id || kebabCase(label) || null,
     indexHistory
   };
 };
-
-const TEST_COLLECTION = [
-  getNewItem({ label: 'Apple', indexHistory: [] }),
-  getNewItem({ label: 'Tree', indexHistory: [] }),
-  getNewItem({ label: 'Dinosaur', indexHistory: [] }),
-  getNewItem({ label: 'Cracker', indexHistory: [] }),
-  getNewItem({ label: 'Box', indexHistory: [] })
-];
-
-const ItemInput = ({ handleAdd, handleInputChange, handleInputRef, value }) => {
-  return (
-    <Input
-      ref={handleInputRef}
-      placeholder="Add an item..."
-      value={value}
-      onChange={handleInputChange}
-      onKeyPress={e => {
-        if (e.key === 'Enter') {
-          handleAdd();
-        }
-      }}
-      action={<Button color="teal" content="Add" onClick={handleAdd} />}
-    />
-  );
-};
-
-class AppTitle extends React.Component {
-  constructor(props) {
-    super(props);
-    const title = endsWith(props.title, SPACE)
-      ? props.title
-      : `${props.title}${SPACE}`;
-    this.state = {
-      targetIndex: -1,
-      title,
-      transitionSpeed: 600
-    };
-  }
-
-  getTitleText = () => {
-    const { title, targetIndex } = this.state;
-    let start = slice(title, 0, targetIndex);
-    let end = slice(title, targetIndex + 1, title.length);
-
-    return (
-      <span>
-        {start}
-        <Emoji label="curly_loop" spinning symbol="➰" />
-        {end}
-      </span>
-    );
-  };
-
-  increaseIndex = () => {
-    const { targetIndex, title, transitionSpeed } = this.state;
-    const isLastIndex = targetIndex >= title.length;
-
-    if (!isLastIndex) {
-      let newTargetIndex = targetIndex + 1;
-      if (title[newTargetIndex] === SPACE) newTargetIndex += 1;
-      this.setState({
-        targetIndex: newTargetIndex
-      });
-      setTimeout(this.increaseIndex, transitionSpeed);
-    }
-  };
-
-  componentDidMount() {
-    this.increaseIndex();
-  }
-
-  render() {
-    return <Header as="h1">{this.getTitleText()}</Header>;
-  }
-}
 
 function updateIndexHistories(result) {
   return result.map((item, currentIndex) => {
@@ -152,11 +73,14 @@ function orderDown(index, collection = []) {
 }
 
 class App extends React.Component {
-  state = {
-    dataInput: '',
-    collection: TEST_COLLECTION,
-    recentlyTouchedIndex: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataInput: '',
+      collection: props.collection,
+      recentlyTouchedIndex: null
+    };
+  }
 
   handleInputRef = c => {
     this.inputRef = c;
@@ -170,7 +94,7 @@ class App extends React.Component {
 
   handleAdd = () => {
     const { collection, dataInput } = this.state;
-    const newItem = getNewItem({ label: dataInput });
+    const newItem = getNewItem(dataInput);
     this.setState(
       {
         collection: [...collection, newItem],
@@ -186,7 +110,7 @@ class App extends React.Component {
   }
 
   log = () => {
-    console.log({ state: this.state });
+    console.log({ state: this.state, props: this.props });
   };
 
   handleRecentlyTouchedIndex = () => {
@@ -273,7 +197,7 @@ class App extends React.Component {
     const { collection, dataInput, recentlyTouchedIndex } = this.state;
     return (
       <div className="App">
-        <AppTitle title="Loop" />
+        <LoopTitle title="Loop" />
         <ItemInput
           handleAdd={this.handleAdd}
           handleInputChange={this.handleInputChange}
