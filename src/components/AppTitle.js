@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { Header } from 'semantic-ui-react';
 import slice from 'lodash/slice';
 import Emoji from './Emoji';
@@ -34,26 +34,29 @@ function reducer(state, action) {
 }
 
 function SymbolThroughText({ title, transitionSpeed = 600 }) {
-  const [state, dispatch] = useReducer(reducer, {
-    symbolIndex: 0
-  });
-  const { symbolIndex } = state;
+  // const [state, dispatch] = useReducer(reducer, {
+  //   symbolIndex: 0
+  // });
+  // const { symbolIndex } = state;
+  const [symbolIndex, setSymbolIndex] = useState(-1);
 
-  // useEffect(
-  //   () => {
-  //     if (!symbolIndex >= title.length) {
-  //       moveSymbolThrough(symbolIndex, title, () => {
-  //         dispatch({ type: 'INCREMENT_SYMBOL_INDEX' });
-  //       });
-  //       setTimeout(() => {
-  //         moveSymbolThrough(symbolIndex, title, () => {
-  //           dispatch({ type: 'INCREMENT_SYMBOL_INDEX' });
-  //         });
-  //       }, transitionSpeed);
-  //     }
-  //   },
-  //   [symbolIndex]
-  // );
+  useEffect(
+    () => {
+      if (!symbolIndex >= title.length) {
+        moveSymbolThrough(symbolIndex, title, () => {
+          // dispatch({ type: 'INCREMENT_SYMBOL_INDEX' });
+          setSymbolIndex(symbolIndex + 1);
+        });
+        setTimeout(() => {
+          moveSymbolThrough(symbolIndex, title, () => {
+            setSymbolIndex(symbolIndex + 1);
+            // dispatch({ type: 'INCREMENT_SYMBOL_INDEX' });
+          });
+        }, transitionSpeed);
+      }
+    },
+    [symbolIndex]
+  );
 
   return (
     <Header as="h1">

@@ -1,14 +1,10 @@
 import React from 'react';
-import { Button, Header, Input } from 'semantic-ui-react';
+import { Button, Input } from 'semantic-ui-react';
 import kebabCase from 'lodash/kebabCase';
 import get from 'lodash/get';
-import endsWith from 'lodash/endsWith';
-import slice from 'lodash/slice';
-import { Emoji, Results } from './components';
+import { AppTitle, Results } from './components';
 import { move } from './util';
 import './App.css';
-
-const SPACE = ' ';
 
 const getNewItem = ({ id, indexHistory = [], label = '' }) => {
   return {
@@ -42,56 +38,6 @@ const ItemInput = ({ handleAdd, handleInputChange, handleInputRef, value }) => {
     />
   );
 };
-
-class AppTitle extends React.Component {
-  constructor(props) {
-    super(props);
-    const title = endsWith(props.title, SPACE)
-      ? props.title
-      : `${props.title}${SPACE}`;
-    this.state = {
-      targetIndex: -1,
-      title,
-      transitionSpeed: 600
-    };
-  }
-
-  getTitleText = () => {
-    const { title, targetIndex } = this.state;
-    let start = slice(title, 0, targetIndex);
-    let end = slice(title, targetIndex + 1, title.length);
-
-    return (
-      <span>
-        {start}
-        <Emoji label="curly_loop" spinning symbol="➰" />
-        {end}
-      </span>
-    );
-  };
-
-  increaseIndex = () => {
-    const { targetIndex, title, transitionSpeed } = this.state;
-    const isLastIndex = targetIndex >= title.length;
-
-    if (!isLastIndex) {
-      let newTargetIndex = targetIndex + 1;
-      if (title[newTargetIndex] === SPACE) newTargetIndex += 1;
-      this.setState({
-        targetIndex: newTargetIndex
-      });
-      setTimeout(this.increaseIndex, transitionSpeed);
-    }
-  };
-
-  componentDidMount() {
-    this.increaseIndex();
-  }
-
-  render() {
-    return <Header as="h1">{this.getTitleText()}</Header>;
-  }
-}
 
 function updateIndexHistories(result) {
   return result.map((item, currentIndex) => {
